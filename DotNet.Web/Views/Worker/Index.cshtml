@@ -1,0 +1,119 @@
+﻿@model WorkerInfo
+
+
+@{
+    ViewData["Title"] = "작업자 관리";
+}
+@section Styles {
+   <link href="~/utils/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/utils/jquery.dataTables.min.js"></script>
+    <script src="~/utils/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {          // DataTable : jquery.dataTables.min.js 라이브러리 의 Table 
+            $('#WorkerListTable').DataTable({    // #WorkerListTable : DataTable 의 Name
+                "pagingType" : "full_numbers", 
+                "lengthMenu" : [5, 25, 50, 100]  // 테이블 에 보여질 행의 수 
+            });
+        });
+    </script>
+}
+
+
+<h1 class="h3 mb-2 text-gray-800">@ViewData["Title"]</h1>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active">작업자 리스트</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Worker" asp-action="Ajax">작업자 Ajax 리스트</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Worker" asp-action="List">작업자 Paging 리스트</a>
+    </li>
+</ul>
+<p class="mb-4 note">
+    작업자 데이터 관리
+</p>
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">작업자 리스트</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive table-striped">
+            <table class="table table-bordered" id="WorkerListTable" width="100%" cellspacing="0">
+
+                <thead>
+                    <tr>
+                        <th class="text-center bg-warning">#</th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].FirstName)
+                        </th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].DeptName)
+                        </th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].Age)
+                        </th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].InDate)
+                        </th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].Salary)
+                        </th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                    @if (Model.workermasters == null
+                    || Model.workermasters.Count < 1)
+                    {
+                        <tr>
+                            <td colspan="7">등록된 작업자 정보를 확인 할 수 없습니다.</td>
+                        </tr>
+                    }
+                    else {
+                        foreach (var item in Model.workermasters)
+                        {
+                            <tr>
+                                <td>@item.SortNo</td>
+                                <td>@item.UserName</td>
+                                <td>@item.DeptName</td>
+                                <td>@item.Age</td>
+                                <td>@item.InDateString</td>
+                                <td>@item.SalaryString</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+
+                <tfoot>
+                    <tr>
+                        <th class="text-center bg-warning">#</th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].FirstName)
+                        </th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].DeptName)
+                        </th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].Age)
+                        </th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].InDate)
+                        </th>
+                        <th class="text-center bg-warning">
+                            @Html.DisplayNameFor(m => m.workermasters[0].Salary)
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
